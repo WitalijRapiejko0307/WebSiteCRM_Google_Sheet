@@ -20,7 +20,7 @@ jobs:
           username: ${{ secrets.FTP_USER }}
           password: ${{ secrets.FTP_PASSWORD }}
           # FTP-Deploy-Action requires trailing slash for target directory.
-          server-dir: /home/crmgspro/public_html/
+          server-dir: /public_html/
           protocol: ftp
           port: ${{ secrets.FTP_PORT || 21 }}
           exclude: |
