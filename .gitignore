@@ -1,0 +1,19 @@
+.DS_Store
+Thumbs.db
+
+# IDE/assistant local metadata
+.cursor/
+.vscode/
+
+# Env/secrets
+.env
+.env.*
+!.env.example
+
+# Logs/temp
+*.log
+tmp/
+temp/
+
+# Placeholder heavy assets (not for production deploy)
+assets/placeholders/
