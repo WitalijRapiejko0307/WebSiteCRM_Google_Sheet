@@ -15,5 +15,3 @@ Thumbs.db
 tmp/
 temp/
 
-# Placeholder heavy assets (not for production deploy)
-assets/placeholders/
