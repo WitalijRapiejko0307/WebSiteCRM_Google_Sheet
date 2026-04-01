@@ -28,6 +28,5 @@ jobs:
             **/.git*/**
             **/.cursor/**
             **/.vscode/**
-            **/assets/placeholders/**
             **/.env*
             **/node_modules/**
