@@ -10,6 +10,7 @@ const leadForm = document.querySelector("[data-lead-form]");
 const leadFormStatus = document.querySelector("[data-lead-form-status]");
 const leadFormSubmitButton = leadForm?.querySelector(".lead-form__submit");
 const LEAD_SUBMIT_ENDPOINT = "./api/submit-lead.php";
+const LEAD_THANK_YOU_DEFAULT = "./thank-you.html";
 
 const validators = {
   name: (value) => (value.trim() ? "" : "Укажите имя."),
@@ -124,6 +125,15 @@ leadForm?.addEventListener("submit", async (event) => {
     if (!response.ok || !payload.ok) {
       const message = payload.message || "Ошибка отправки. Попробуйте еще раз.";
       setFormStatus(message, "is-error");
+      return;
+    }
+
+    if (payload.thankYou === true) {
+      const next =
+        typeof payload.thankYouPath === "string" && payload.thankYouPath.trim() !== ""
+          ? payload.thankYouPath.trim()
+          : LEAD_THANK_YOU_DEFAULT;
+      window.location.assign(next);
       return;
     }
 

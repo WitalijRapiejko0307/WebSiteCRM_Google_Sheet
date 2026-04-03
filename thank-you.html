@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Заявка принята — CRM в Google Таблицах</title>
+    <meta name="robots" content="noindex, follow" />
+    <link rel="stylesheet" href="./styles.css" />
+
+    <!-- conversion-pixels:head — вставьте базовый код Meta Pixel, Google tag (gtag.js), VK и т.д. только на этой странице -->
+    <!-- Пример Meta: <script>...</script> + событие Lead при необходимости отдельным скриптом ниже -->
+    <!-- Пример Google Ads: gtag('event', 'conversion', { ... }) после загрузки gtag -->
+
+    <!-- /conversion-pixels:head -->
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Перейти к содержимому</a>
+    <header class="site-header">
+      <div class="container">
+        <a class="brand" href="./index.html">CRM в Google Sheets</a>
+      </div>
+    </header>
+
+    <main id="main-content" class="section">
+      <div class="container">
+        <h1>Заявка принята</h1>
+        <p class="lead">
+          Спасибо! Мы получили ваши контакты и свяжемся с вами в ближайшее время.
+        </p>
+        <p>
+          <a class="btn btn-primary" href="./index.html">Вернуться на главную</a>
+        </p>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <p>© <span id="current-year"></span> Виталий. CRM в Google Таблицах для Беларуси.</p>
+      </div>
+    </footer>
+
+    <!-- conversion-pixels:body — дополнительные теги, img/noscript пиксели -->
+    <!-- /conversion-pixels:body -->
+
+    <script>
+      const yearNode = document.querySelector("#current-year");
+      if (yearNode) yearNode.textContent = String(new Date().getFullYear());
+    </script>
+  </body>
+</html>

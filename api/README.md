@@ -19,3 +19,16 @@ The script accepts `POST` form fields:
 - `phone` (optional if `contactHandle` filled)
 - `contactHandle` (optional if `phone` filled)
 - `website` (honeypot, must stay empty)
+
+## JSON response (success)
+
+When the lead is **actually delivered** (Telegram and/or email succeeded), the response is `200` with:
+
+- `ok`: `true`
+- `message`: user-facing string
+- `thankYou`: `true` — front end redirects to the thank-you page for conversion tracking
+- `thankYouPath`: relative path to the thank-you page (default `./thank-you.html`)
+
+Honeypot submissions still return `ok: true` but **without** `thankYou`, so ad pixels are not triggered.
+
+**Conversion URL for ad platforms:** use your site origin + `/thank-you.html` (for example `https://crm-gs.pro/thank-you.html`). Place pixel / gtag snippets only in `thank-you.html` (see comments `conversion-pixels:head` / `conversion-pixels:body`).

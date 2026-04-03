@@ -19,6 +19,19 @@ function jsonResponse(int $statusCode, bool $ok, string $message): void
     exit;
 }
 
+/** Successful lead delivery: client may redirect for conversion tracking (not used for honeypot). */
+function jsonLeadDeliveredResponse(string $message): void
+{
+    http_response_code(200);
+    echo json_encode([
+        'ok' => true,
+        'message' => $message,
+        'thankYou' => true,
+        'thankYouPath' => './thank-you.html',
+    ], JSON_UNESCAPED_UNICODE);
+    exit;
+}
+
 function normalize(?string $value): string
 {
     return trim((string) $value);
@@ -186,7 +199,7 @@ $telegramSent = sendTelegram($botToken, $chatId, $tgMessage);
 $emailSent = sendEmail($leadEmail, $emailSubject, $emailBody, $mailFrom);
 
 if ($telegramSent || $emailSent) {
-    jsonResponse(200, true, 'Спасибо! Заявка отправлена.');
+    jsonLeadDeliveredResponse('Спасибо! Заявка отправлена.');
 }
 
 error_log('Lead delivery failed: both Telegram and email failed.');
