@@ -7,6 +7,17 @@
 - `LEAD_EMAIL_TO` - Single destination email.
 - `MAIL_FROM` - Optional sender, e.g. `no-reply@your-domain.com`.
 
+## Local `.env` file (project root)
+
+After valid requests pass rate limiting, `submit-lead.php` loads **`/.env`** next to the site root (same directory as `index.html`, not inside `api/`). Use the committed template:
+
+1. Copy `.env.example` to `.env` in the repository root.
+2. Fill in values. Lines are `KEY=value`; `#` starts a comment; optional quotes around values are stripped.
+
+**Precedence:** If the host already defines a variable (cPanel, `.htaccess` `SetEnv`, PHP-FPM pool, etc.), that value is kept; `.env` only fills variables that are **not** already set.
+
+`.env` is listed in `.gitignore` and must not be committed.
+
 ## Example (Apache/Nginx environment)
 
 Set variables in your host config or process environment, then expose:

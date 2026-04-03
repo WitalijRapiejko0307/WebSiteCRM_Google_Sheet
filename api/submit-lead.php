@@ -82,6 +82,51 @@ function isRateLimited(string $ip): bool
     return false;
 }
 
+/** Load KEY=VALUE lines from a local .env (does not override existing getenv). */
+function loadEnvFile(string $path): void
+{
+    if (!is_readable($path)) {
+        return;
+    }
+
+    $lines = file($path, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+    if ($lines === false) {
+        return;
+    }
+
+    foreach ($lines as $line) {
+        $line = trim($line);
+        if ($line === '' || str_starts_with($line, '#')) {
+            continue;
+        }
+
+        $eq = strpos($line, '=');
+        if ($eq === false) {
+            continue;
+        }
+
+        $name = trim(substr($line, 0, $eq));
+        if ($name === '' || !preg_match('/^[A-Za-z_][A-Za-z0-9_]*$/', $name)) {
+            continue;
+        }
+
+        $value = trim(substr($line, $eq + 1));
+        if (
+            (str_starts_with($value, '"') && str_ends_with($value, '"') && strlen($value) >= 2) ||
+            (str_starts_with($value, "'") && str_ends_with($value, "'") && strlen($value) >= 2)
+        ) {
+            $value = substr($value, 1, -1);
+        }
+
+        if (getenv($name) !== false) {
+            continue;
+        }
+
+        putenv($name . '=' . $value);
+        $_ENV[$name] = $value;
+    }
+}
+
 function getEnvValue(string $key): string
 {
     $value = getenv($key);
@@ -163,6 +208,8 @@ $ip = getClientIp();
 if (isRateLimited($ip)) {
     jsonResponse(429, false, 'Слишком много попыток. Повторите чуть позже.');
 }
+
+loadEnvFile(dirname(__DIR__) . '/.env');
 
 $botToken = getEnvValue('TELEGRAM_BOT_TOKEN');
 $chatId = getEnvValue('TELEGRAM_CHAT_ID');
