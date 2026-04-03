@@ -139,6 +139,10 @@ function sendTelegram(string $botToken, string $chatId, string $text): bool
         return false;
     }
 
+    if (!function_exists('curl_init')) {
+        return false;
+    }
+
     $url = 'https://api.telegram.org/bot' . $botToken . '/sendMessage';
 
     $payload = http_build_query([
@@ -148,18 +152,25 @@ function sendTelegram(string $botToken, string $chatId, string $text): bool
         'disable_web_page_preview' => 'true',
     ]);
 
-    $context = stream_context_create([
-        'http' => [
-            'method' => 'POST',
-            'header' => "Content-Type: application/x-www-form-urlencoded\r\n",
-            'content' => $payload,
-            'timeout' => 8,
-            'ignore_errors' => true,
-        ],
+    $ch = curl_init($url);
+    if ($ch === false) {
+        return false;
+    }
+
+    curl_setopt_array($ch, [
+        CURLOPT_POST => true,
+        CURLOPT_POSTFIELDS => $payload,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_HTTPHEADER => ['Content-Type: application/x-www-form-urlencoded'],
+        CURLOPT_CONNECTTIMEOUT => 8,
+        CURLOPT_TIMEOUT => 8,
     ]);
 
-    $result = @file_get_contents($url, false, $context);
-    if ($result === false) {
+    $result = curl_exec($ch);
+    $ok = $result !== false && curl_errno($ch) === 0;
+    curl_close($ch);
+
+    if (!$ok || !is_string($result)) {
         return false;
     }
 
