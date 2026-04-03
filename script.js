@@ -123,6 +123,25 @@ leadForm?.addEventListener("submit", async (event) => {
 
     const payload = await response.json().catch(() => ({ ok: false }));
     if (!response.ok || !payload.ok) {
+      // #region agent log
+      fetch("http://127.0.0.1:7399/ingest/1e105180-efc9-4cde-a12e-b07f8116e667", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "X-Debug-Session-Id": "5193f3" },
+        body: JSON.stringify({
+          sessionId: "5193f3",
+          hypothesisId: "FE",
+          location: "script.js:lead-submit",
+          message: "submit response not ok",
+          data: {
+            httpStatus: response.status,
+            payloadOk: payload.ok === true,
+            messageKey: typeof payload.message === "string" ? payload.message.slice(0, 80) : null
+          },
+          timestamp: Date.now(),
+          runId: "pre"
+        })
+      }).catch(() => {});
+      // #endregion
       const message = payload.message || "Ошибка отправки. Попробуйте еще раз.";
       setFormStatus(message, "is-error");
       return;

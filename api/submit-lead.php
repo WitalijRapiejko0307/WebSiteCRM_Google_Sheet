@@ -12,6 +12,26 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 const RATE_WINDOW_SECONDS = 120;
 const MAX_REQUESTS_PER_WINDOW = 4;
 
+// #region agent log
+function agentDebugLog(string $hypothesisId, string $location, string $message, array $data): void
+{
+    $path = dirname(__DIR__) . '/.cursor/debug-5193f3.log';
+    $dir = dirname($path);
+    if (!is_dir($dir)) {
+        @mkdir($dir, 0775, true);
+    }
+    $payload = [
+        'sessionId' => '5193f3',
+        'hypothesisId' => $hypothesisId,
+        'location' => $location,
+        'message' => $message,
+        'data' => $data,
+        'timestamp' => (int) round(microtime(true) * 1000),
+    ];
+    @file_put_contents($path, json_encode($payload, JSON_UNESCAPED_UNICODE) . "\n", FILE_APPEND | LOCK_EX);
+}
+// #endregion
+
 function jsonResponse(int $statusCode, bool $ok, string $message): void
 {
     http_response_code($statusCode);
@@ -136,6 +156,12 @@ function getEnvValue(string $key): string
 function sendTelegram(string $botToken, string $chatId, string $text): bool
 {
     if ($botToken === '' || $chatId === '') {
+        // #region agent log
+        agentDebugLog('H1', 'sendTelegram:skip', 'missing token or chat id', [
+            'hasToken' => $botToken !== '',
+            'hasChatId' => $chatId !== '',
+        ]);
+        // #endregion
         return false;
     }
 
@@ -160,16 +186,33 @@ function sendTelegram(string $botToken, string $chatId, string $text): bool
 
     $result = @file_get_contents($url, false, $context);
     if ($result === false) {
+        // #region agent log
+        agentDebugLog('H5', 'sendTelegram:network', 'file_get_contents false', [
+            'allow_url_fopen' => filter_var(ini_get('allow_url_fopen'), FILTER_VALIDATE_BOOLEAN),
+        ]);
+        // #endregion
         return false;
     }
 
     $decoded = json_decode($result, true);
-    return is_array($decoded) && ($decoded['ok'] ?? false) === true;
+    $ok = is_array($decoded) && ($decoded['ok'] ?? false) === true;
+    if (!$ok) {
+        // #region agent log
+        agentDebugLog('H2', 'sendTelegram:api', 'telegram response not ok', [
+            'error_code' => is_array($decoded) ? ($decoded['error_code'] ?? null) : null,
+            'description' => is_array($decoded) ? ($decoded['description'] ?? null) : null,
+        ]);
+        // #endregion
+    }
+    return $ok;
 }
 
 function sendEmail(string $to, string $subject, string $body, string $from): bool
 {
     if ($to === '') {
+        // #region agent log
+        agentDebugLog('H3', 'sendEmail', 'empty recipient', []);
+        // #endregion
         return false;
     }
 
@@ -180,7 +223,13 @@ function sendEmail(string $to, string $subject, string $body, string $from): boo
         'Reply-To: ' . $from,
     ];
 
-    return @mail($to, $subject, $body, implode("\r\n", $headers));
+    $sent = @mail($to, $subject, $body, implode("\r\n", $headers));
+    if (!$sent) {
+        // #region agent log
+        agentDebugLog('H3', 'sendEmail', 'mail() returned false', []);
+        // #endregion
+    }
+    return $sent;
 }
 
 $name = normalize($_POST['name'] ?? '');
@@ -221,6 +270,19 @@ if ($mailFrom === '') {
     $mailFrom = 'no-reply@' . preg_replace('/:\d+$/', '', $host);
 }
 
+// #region agent log
+$envPath = dirname(__DIR__) . '/.env';
+agentDebugLog('H1', 'submit-lead.php:env', 'configuration snapshot', [
+    'envFileReadable' => is_readable($envPath),
+    'hasToken' => strlen($botToken) > 0,
+    'hasChatId' => strlen($chatId) > 0,
+    'hasLeadEmail' => strlen($leadEmail) > 0,
+]);
+agentDebugLog('H5', 'submit-lead.php:ini', 'allow_url_fopen', [
+    'allow_url_fopen' => filter_var(ini_get('allow_url_fopen'), FILTER_VALIDATE_BOOLEAN),
+]);
+// #endregion
+
 $timestamp = date('Y-m-d H:i:s');
 $nameSafe = htmlspecialchars($name, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
 $phoneSafe = htmlspecialchars($phone !== '' ? $phone : '-', ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
@@ -244,6 +306,13 @@ $emailBody = "Новая заявка с сайта\n\n"
 
 $telegramSent = sendTelegram($botToken, $chatId, $tgMessage);
 $emailSent = sendEmail($leadEmail, $emailSubject, $emailBody, $mailFrom);
+
+// #region agent log
+agentDebugLog('H4', 'submit-lead.php:delivery', 'channel results', [
+    'telegramSent' => $telegramSent,
+    'emailSent' => $emailSent,
+]);
+// #endregion
 
 if ($telegramSent || $emailSent) {
     jsonLeadDeliveredResponse('Спасибо! Заявка отправлена.');
