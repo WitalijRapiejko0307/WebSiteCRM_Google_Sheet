@@ -4,6 +4,25 @@
  * Access: /api/diag.php?key=YOUR_SECRET_KEY
  */
 declare(strict_types=1);
+
+if (!function_exists('str_starts_with')) {
+    function str_starts_with(string $haystack, string $needle): bool
+    {
+        return $needle === '' || strncmp($haystack, $needle, strlen($needle)) === 0;
+    }
+}
+if (!function_exists('str_ends_with')) {
+    function str_ends_with(string $haystack, string $needle): bool
+    {
+        $n = strlen($needle);
+        if ($n === 0) {
+            return true;
+        }
+
+        return strlen($haystack) >= $n && substr_compare($haystack, $needle, -$n) === 0;
+    }
+}
+
 header('Content-Type: application/json; charset=utf-8');
 
 define('DIAG_KEY', 'crm-diag-2026');
@@ -74,7 +93,8 @@ $leadEmail = trim((string)(getenv('LEAD_EMAIL_TO')     ?: ''));
 
 // ── 2. cURL ───────────────────────────────────────────────────────────────
 $curlAvailable = function_exists('curl_init');
-$curlVersion   = $curlAvailable ? (curl_version()['version'] ?? 'unknown') : null;
+$curlInfo      = $curlAvailable ? curl_version() : null;
+$curlVersion   = is_array($curlInfo) ? ($curlInfo['version'] ?? 'unknown') : null;
 
 // ── 3. Test Telegram (only if token+chatId present) ───────────────────────
 $tgTest = null;
@@ -107,7 +127,7 @@ if ($curlAvailable && $botToken !== '' && $chatId !== '') {
 $allowUrlFopen = filter_var(ini_get('allow_url_fopen'), FILTER_VALIDATE_BOOLEAN);
 
 // ── Output ────────────────────────────────────────────────────────────────
-echo json_encode([
+$payload = [
     'envFile' => [
         'expectedPath' => $envPath,
         'exists'       => $envExists,
@@ -128,4 +148,19 @@ echo json_encode([
     'allow_url_fopen' => $allowUrlFopen,
     'phpVersion'      => PHP_VERSION,
     'serverDir'       => __DIR__,
-], JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
+];
+
+$jsonFlags = JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT;
+if (defined('JSON_INVALID_UTF8_SUBSTITUTE')) {
+    $jsonFlags |= JSON_INVALID_UTF8_SUBSTITUTE;
+}
+
+$out = json_encode($payload, $jsonFlags);
+if ($out === false) {
+    http_response_code(500);
+    header('Content-Type: text/plain; charset=utf-8');
+    echo 'json_encode failed: ' . json_last_error_msg();
+    exit;
+}
+
+echo $out;

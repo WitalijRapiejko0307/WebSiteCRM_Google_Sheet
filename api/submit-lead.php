@@ -1,6 +1,30 @@
 <?php
 declare(strict_types=1);
 
+// Polyfills for PHP < 8.0 (common on shared hosting; native functions otherwise).
+if (!function_exists('str_starts_with')) {
+    function str_starts_with(string $haystack, string $needle): bool
+    {
+        return $needle === '' || strncmp($haystack, $needle, strlen($needle)) === 0;
+    }
+}
+if (!function_exists('str_ends_with')) {
+    function str_ends_with(string $haystack, string $needle): bool
+    {
+        $n = strlen($needle);
+        if ($n === 0) {
+            return true;
+        }
+
+        return strlen($haystack) >= $n && substr_compare($haystack, $needle, -$n) === 0;
+    }
+}
+
+function utf8Len(string $value): int
+{
+    return function_exists('mb_strlen') ? mb_strlen($value) : strlen($value);
+}
+
 header('Content-Type: application/json; charset=utf-8');
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -203,7 +227,7 @@ if ($website !== '') {
     jsonResponse(200, true, 'Заявка принята.');
 }
 
-if ($name === '' || mb_strlen($name) > 120) {
+if ($name === '' || utf8Len($name) > 120) {
     jsonResponse(422, false, 'Проверьте поле "Имя".');
 }
 
@@ -211,7 +235,7 @@ if ($phone === '' && $contactHandle === '') {
     jsonResponse(422, false, 'Укажите телефон или Telegram/Instagram.');
 }
 
-if (mb_strlen($phone) > 64 || mb_strlen($contactHandle) > 120) {
+if (utf8Len($phone) > 64 || utf8Len($contactHandle) > 120) {
     jsonResponse(422, false, 'Слишком длинные контактные данные.');
 }
 
