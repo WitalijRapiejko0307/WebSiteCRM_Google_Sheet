@@ -29,8 +29,7 @@
     />
     <meta name="twitter:image" content="https://crm-gs.pro/assets/placeholders/og-placeholder.jpg" />
     <link rel="stylesheet" href="./styles.css" />
-    <script defer src="./script.js"></script>
-    <script defer src="./form-handler.js"></script>
+    <script defer src="./script.js?v=2"></script>
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -370,7 +369,7 @@
           ×
         </button>
         <h2 id="lead-form-title">Оставить заявку на подключение</h2>
-        <form class="lead-form" data-lead-form novalidate>
+        <form class="lead-form" data-lead-form novalidate action="#" method="post">
           <label class="lead-form__field">
             <span>Имя *</span>
             <input type="text" name="name" autocomplete="name" required />

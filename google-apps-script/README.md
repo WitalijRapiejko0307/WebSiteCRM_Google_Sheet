@@ -1,6 +1,6 @@
 # Google Apps Script (Web App)
 
-Фронтенд отправляет заявки из `form-handler.js` на URL Web App (`GOOGLE_SCRIPT_URL`).
+Фронтенд отправляет заявки из `script.js` на URL Web App (`GOOGLE_SCRIPT_URL`).
 
 ## Тело запроса
 
