@@ -1,54 +1,43 @@
 # CRM Landing
 
-Проект хранится в Git, а выкладка на хостинг идет по FTP через GitHub Actions.
+Статический лендинг. Публикация: **GitHub Pages** + домен **crm-gs.pro** (файл `CNAME`).
 
-## 1) Инициализация и первая отправка в GitHub
+## Деплой
 
-```bash
-git branch -M main
-git add .
-git commit -m "Initial project setup with FTP deploy workflow"
-git remote add origin <YOUR_GITHUB_REPO_URL>
-git push -u origin main
-```
+1. В репозитории: **Settings → Pages → Build and deployment → Source** → **GitHub Actions**.
+2. После `git push` в `main` запускается workflow [`.github/workflows/pages.yml`](.github/workflows/pages.yml).
+3. Статус: **Actions** → **Deploy GitHub Pages** (зелёная галочка = сайт обновлён).
 
-## 2) Настройка GitHub Secrets
+FTP-хостинг не используется (старый workflow отключён).
 
-В репозитории GitHub откройте `Settings -> Secrets and variables -> Actions` и добавьте:
+## Локальная разработка
 
-- `FTP_HOST` = `vh151.hoster.by`
-- `FTP_USER` = `crmgspro`
-- `FTP_PASSWORD` = ваш FTP пароль
-- `FTP_REMOTE_DIR` = `/home/crmgspro/public_html/`
-- `FTP_PORT` = `21`
+Откройте `index.html` через локальный сервер или расширение Live Server — форма шлёт заявки в Google Apps Script (см. `google-apps-script/README.md`).
 
-Важно: не храните пароль в коде или в `.env`, который коммитится в репозиторий.
+## Форма заявок
 
-## 3) Релиз
+- Логика отправки: `script.js` → Web App Google Apps Script.
+- PHP (`api/submit-lead.php`) на GitHub Pages не выполняется; файл оставлен для справки / переноса на хостинг с PHP.
 
-- Вносите изменения локально.
-- Выполняйте `git add . && git commit -m "..." && git push`.
-- После `push` в `main` workflow `.github/workflows/deploy.yml` автоматически загрузит файлы на хостинг.
+## DNS для crm-gs.pro
 
-## 4) Откат
+У регистратора домена:
 
-Вариант A (без переписывания истории):
+| Тип | Имя | Значение |
+|-----|-----|----------|
+| A | `@` | `185.199.108.153` |
+| A | `@` | `185.199.109.153` |
+| A | `@` | `185.199.110.153` |
+| A | `@` | `185.199.111.153` |
+| CNAME | `www` | `<user>.github.io` (опционально) |
 
-```bash
-git revert <bad_commit_sha>
-git push
-```
+Либо одна запись **ALIAS/ANAME** на `<user>.github.io`, если поддерживается регистратором.
 
-Вариант B (вернуть состояние на конкретный коммит новым коммитом):
+В GitHub: **Settings → Pages → Custom domain** → `crm-gs.pro`, включить **Enforce HTTPS**.
+
+## Откат
 
 ```bash
-git checkout <good_commit_sha> -- .
-git commit -m "Rollback to <good_commit_sha>"
-git push
+git revert <commit_sha>
+git push origin main
 ```
-
-После `push` будет повторный деплой стабильной версии.
-
-## 5) Deploy check note
-
-Этот раздел добавлен как техническая правка для проверки запуска GitHub Actions по `git push`.

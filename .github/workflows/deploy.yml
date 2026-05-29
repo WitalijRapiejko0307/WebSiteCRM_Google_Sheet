@@ -1,34 +1,12 @@
-name: Deploy to FTP Hosting
+# FTP-хостинг отключён. Сайт публикуется через GitHub Pages (.github/workflows/pages.yml).
+name: Deploy to FTP Hosting (disabled)
 
 on:
-  push:
-    branches:
-      - main
   workflow_dispatch:
 
 jobs:
   deploy:
+    if: false
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Deploy files via FTP
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-        with:
-          server: ${{ secrets.FTP_HOST }}
-          username: ${{ secrets.FTP_USER }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          # FTP-Deploy-Action requires trailing slash for target directory.
-          server-dir: /public_html/
-          protocol: ftp
-          port: ${{ secrets.FTP_PORT || 21 }}
-          exclude: |
-            **/.git*
-            **/.git*/**
-            **/.cursor/**
-            **/.vscode/**
-            **/.env*
-            **/node_modules/**
-            **/api/submit-lead.php
-            **/form_handler.js
+      - run: echo "FTP deploy is disabled. Use pages.yml instead."
