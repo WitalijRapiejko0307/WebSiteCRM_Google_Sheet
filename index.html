@@ -6,11 +6,11 @@
     <title>CRM для Белпочты и Европочты в Google Таблицах</title>
     <meta
       name="description"
-      content="Автоматизируйте отправки через Белпочту и Европочту: CRM в Google Таблицах принимает заявки с сайта, формирует бланки и отправляет СМС-оповещения."
+      content="CRM в Google Таблицах для Белпочты и Европочты: заявки с сайта, бланки, СМС и интеграция с колл-центром на SalesRender — без личного аккаунта и ежемесячной подписки."
     />
     <meta
       name="keywords"
-      content="CRM Google Sheets, Белпочта, Европочта, СМС оповещения, товарный бизнес Беларусь"
+      content="CRM Google Sheets, Белпочта, Европочта, СМС оповещения, колл-центр, SalesRender, ewinners, товарный бизнес Беларусь"
     />
     <link rel="canonical" href="https://crm-gs.pro/" />
     <meta property="og:type" content="website" />
@@ -44,12 +44,15 @@
           { "@type": "PropertyValue", "name": "Интеграция Белпочты", "value": "Да" },
           { "@type": "PropertyValue", "name": "Интеграция Европочты", "value": "Да" },
           { "@type": "PropertyValue", "name": "SMS-оповещения", "value": "Да" },
-          { "@type": "PropertyValue", "name": "Прием заявок с сайта", "value": "Да" }
+          { "@type": "PropertyValue", "name": "Прием заявок с сайта", "value": "Да" },
+          { "@type": "PropertyValue", "name": "Интеграция с колл-центром", "value": "Да" }
         ],
         "offers": {
-          "@type": "Offer",
+          "@type": "AggregateOffer",
           "priceCurrency": "BYN",
-          "price": "310",
+          "lowPrice": "310",
+          "highPrice": "390",
+          "offerCount": "2",
           "availability": "https://schema.org/InStock"
         }
       }
@@ -65,6 +68,7 @@
             <li><a href="#pain">Проблемы</a></li>
             <li><a href="#process">Процесс</a></li>
             <li><a href="#features">Функции</a></li>
+            <li><a href="#callcenter">Колл-центр</a></li>
             <li><a href="#reviews">Отзывы</a></li>
             <li><a href="#pricing">Стоимость</a></li>
             <li><a href="#author">Автор</a></li>
@@ -219,6 +223,61 @@
         </div>
       </section>
 
+      <section id="callcenter" class="section">
+        <div class="container">
+          <h2>Колл-центр без своего аккаунта SalesRender</h2>
+          <p class="lead">
+            Если заявки обрабатывает сторонний колл-центр, интеграция передаёт заказы из CRM
+            автоматически в SalesRender колл-центра и возвращает статусы обратно в таблицу. Вам не
+            нужно заводить свой аккаунт SalesRender и платить ежемесячную подписку.
+          </p>
+          <ol class="callcenter-flow">
+            <li class="callcenter-flow__step">
+              <span class="callcenter-flow__num" aria-hidden="true">1</span>
+              <p>Заявка с сайта попадает в CRM</p>
+            </li>
+            <li class="callcenter-flow__step">
+              <span class="callcenter-flow__num" aria-hidden="true">2</span>
+              <p>CRM отправляет заявку в SalesRender колл-центра</p>
+            </li>
+            <li class="callcenter-flow__step">
+              <span class="callcenter-flow__num" aria-hidden="true">3</span>
+              <p>Колл-центр обрабатывает и обновляет данные</p>
+            </li>
+            <li class="callcenter-flow__step">
+              <span class="callcenter-flow__num" aria-hidden="true">4</span>
+              <p>Изменения синхронизируются в вашей CRM</p>
+            </li>
+          </ol>
+          <ul class="callcenter-benefits" aria-label="Преимущества интеграции">
+            <li class="callcenter-benefit">Без личного SalesRender</li>
+            <li class="callcenter-benefit">Без ежемесячной абонплаты</li>
+            <li class="callcenter-benefit">Автосинхронизация заявок</li>
+          </ul>
+          <h3 class="callcenter-partners-title">Интеграция проверена с двумя колл-центрами</h3>
+          <div class="partner-grid">
+            <article class="partner-card partner-card--featured">
+              <div class="partner-card__logo-wrap">
+                <img
+                  src="./assets/placeholders/partner-ewinners.png"
+                  alt="Логотип колл-центра WINNERS — ewinners.by"
+                  width="200"
+                  height="120"
+                />
+              </div>
+              <h4>
+                <a href="https://ewinners.by/" target="_blank" rel="noopener noreferrer">ewinners.by</a>
+              </h4>
+            </article>
+            <article class="partner-card partner-card--generic">
+              <div class="partner-card__icon" aria-hidden="true">НА</div>
+              <h4>Колл-центр Надежды и Анны</h4>
+            </article>
+          </div>
+          <a class="btn btn-primary" href="#pricing">Подключить с колл-центром — 390 BYN</a>
+        </div>
+      </section>
+
       <section id="reviews" class="section">
         <div class="container">
           <h2>Что говорят мои клиенты</h2>
@@ -295,22 +354,39 @@
       </section>
 
       <section id="pricing" class="section">
-        <div class="container pricing-grid">
-          <article class="offer-card">
-            <h2>Стоимость и гарантии</h2>
-            <p class="price">310 BYN</p>
-            <p class="lead">Единоразовый платеж.</p>
-            <ul class="include-list">
-              <li>Готовый шаблон CRM в Google Sheets</li>
-              <li>Интеграции с Белпочтой и Европочтой</li>
-              <li>Автоматические СМС-оповещения</li>
-              <li>Подробные инструкции и поддержка</li>
-            </ul>
-            <button class="btn btn-primary" type="button" data-open-lead-form>
-              Оставить заявку на подключение
-            </button>
-          </article>
-          <figure class="media-placeholder contract-visual">
+        <div class="container">
+          <h2>Стоимость и гарантии</h2>
+          <p class="lead">Единоразовый платеж. Без скрытых ежемесячных платежей за CRM.</p>
+          <div class="pricing-tiers">
+            <article class="offer-card">
+              <h3>Базовый</h3>
+              <p class="price">310 BYN</p>
+              <ul class="include-list">
+                <li>Готовый шаблон CRM в Google Sheets</li>
+                <li>Интеграции с Белпочтой и Европочтой</li>
+                <li>Автоматические СМС-оповещения</li>
+                <li>Подробные инструкции и поддержка</li>
+              </ul>
+              <button class="btn btn-primary" type="button" data-open-lead-form>
+                Оставить заявку
+              </button>
+            </article>
+            <article class="offer-card offer-card--featured">
+              <h3>С колл-центром</h3>
+              <p class="price">390 BYN</p>
+              <p class="price-note">+80 BYN к базовому тарифу</p>
+              <ul class="include-list">
+                <li>Всё из базового тарифа</li>
+                <li>Интеграция с колл-центром на SalesRender</li>
+                <li>Автопередача заявок и синхронизация статусов</li>
+                <li>Без личного аккаунта SalesRender у клиента</li>
+              </ul>
+              <button class="btn btn-primary" type="button" data-open-lead-form>
+                Заявка с интеграцией КЦ
+              </button>
+            </article>
+          </div>
+          <figure class="media-placeholder contract-visual pricing-contract">
             <img
               src="./assets/placeholders/pricing-contract-icon.webp"
               alt="Иконка договора для оплаты юрлицам"

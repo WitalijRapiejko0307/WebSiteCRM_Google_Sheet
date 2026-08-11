@@ -20,6 +20,7 @@ Expected files (replace with real assets later):
 - inside-mockup.webp
 - pricing-contract-icon.webp
 - author_photo.jpg
+- partner-ewinners.png
 
 Usage notes:
 - Hero video block uses process-demo-2min.webm starting from 106s.
