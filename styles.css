@@ -74,8 +74,37 @@ a {
 }
 
 .brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.625rem;
   text-decoration: none;
+  color: inherit;
+  flex-shrink: 0;
+}
+
+.brand__logo {
+  display: block;
+  width: 2.5rem;
+  height: 2.5rem;
+  object-fit: contain;
+}
+
+.brand__text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+
+.brand__name {
   font-weight: 700;
+  font-size: 1.05rem;
+  color: var(--primary);
+}
+
+.brand__tagline {
+  font-weight: 500;
+  font-size: 0.72rem;
+  color: var(--text-muted);
 }
 
 .nav-list {
@@ -800,6 +829,10 @@ p {
   .site-header .container {
     flex-wrap: wrap;
     padding: 0.55rem 0;
+  }
+
+  .brand__tagline {
+    display: none;
   }
 
   .site-header nav {

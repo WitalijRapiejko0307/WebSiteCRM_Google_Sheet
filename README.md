@@ -1,6 +1,6 @@
 # CRM Landing
 
-Статический лендинг. Публикация: **GitHub Pages** + домен **crm-gs.pro** (файл `CNAME`).
+Статический лендинг. Публикация: **GitHub Pages** + домен **crm-gs.online** (файл `CNAME`).
 
 ## Деплой
 
@@ -19,7 +19,7 @@ FTP-хостинг не используется (старый workflow откл
 - Логика отправки: `script.js` → Web App Google Apps Script.
 - PHP (`api/submit-lead.php`) на GitHub Pages не выполняется; файл оставлен для справки / переноса на хостинг с PHP.
 
-## DNS для crm-gs.pro
+## DNS для crm-gs.online
 
 У регистратора домена:
 
@@ -33,7 +33,7 @@ FTP-хостинг не используется (старый workflow откл
 
 Либо одна запись **ALIAS/ANAME** на `<user>.github.io`, если поддерживается регистратором.
 
-В GitHub: **Settings → Pages → Custom domain** → `crm-gs.pro`, включить **Enforce HTTPS**.
+В GitHub: **Settings → Pages → Custom domain** → `crm-gs.online`, включить **Enforce HTTPS**.
 
 ## Откат
 

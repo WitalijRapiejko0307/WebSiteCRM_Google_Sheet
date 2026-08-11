@@ -42,4 +42,4 @@ When the lead is **actually delivered** (Telegram and/or email succeeded), the r
 
 Honeypot submissions still return `ok: true` but **without** `thankYou`, so ad pixels are not triggered.
 
-**Conversion URL for ad platforms:** use your site origin + `/thank-you.html` (for example `https://crm-gs.pro/thank-you.html`). Place pixel / gtag snippets only in `thank-you.html` (see comments `conversion-pixels:head` / `conversion-pixels:body`).
+**Conversion URL for ad platforms:** use your site origin + `/thank-you.html` (for example `https://crm-gs.online/thank-you.html`). Place pixel / gtag snippets only in `thank-you.html` (see comments `conversion-pixels:head` / `conversion-pixels:body`).
