@@ -651,6 +651,36 @@ p {
   font-size: 0.95rem;
 }
 
+.site-footer__inner {
+  display: grid;
+  gap: 1rem;
+}
+
+.site-footer__legal {
+  font-style: normal;
+  margin: 0;
+  display: grid;
+  gap: 0.25rem;
+}
+
+.site-footer__legal p {
+  margin: 0;
+}
+
+.site-footer__legal a {
+  color: var(--primary);
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
+.site-footer__legal a:hover {
+  color: var(--primary-hover);
+}
+
+.site-footer__copy {
+  margin: 0;
+}
+
 .lead-modal[hidden] {
   display: none;
 }
