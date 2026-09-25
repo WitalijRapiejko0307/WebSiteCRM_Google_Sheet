@@ -10,7 +10,8 @@ const GOOGLE_SCRIPT_URL =
 const LEAD_THANK_YOU_DEFAULT = "./thank-you.html";
 
 const modalRoot = document.querySelector("[data-lead-modal]");
-const openLeadButton = document.querySelector("[data-open-lead-form]");
+const openLeadButtons = document.querySelectorAll("[data-open-lead-form]");
+let lastLeadOpener = openLeadButtons[0] || null;
 const closeLeadButtons = document.querySelectorAll("[data-close-lead-form]");
 const leadForm = document.querySelector("[data-lead-form]");
 const leadFormStatus = document.querySelector("[data-lead-form-status]");
@@ -32,10 +33,15 @@ const closeLeadModal = () => {
   if (!modalRoot) return;
   modalRoot.hidden = true;
   setBodyScrollLock(false);
-  openLeadButton?.focus();
+  lastLeadOpener?.focus();
 };
 
-openLeadButton?.addEventListener("click", openLeadModal);
+openLeadButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    lastLeadOpener = button;
+    openLeadModal();
+  });
+});
 
 closeLeadButtons.forEach((button) => {
   button.addEventListener("click", closeLeadModal);
@@ -97,7 +103,8 @@ const collectLeadPayload = () => ({
   name: leadForm.querySelector('[name="name"]')?.value.trim() ?? "",
   phone: leadForm.querySelector('[name="phone"]')?.value.trim() ?? "",
   contactHandle: leadForm.querySelector('[name="contactHandle"]')?.value.trim() ?? "",
-  website: leadForm.querySelector('[name="website"]')?.value.trim() ?? ""
+  website: leadForm.querySelector('[name="website"]')?.value.trim() ?? "",
+  product: leadForm.querySelector('[name="product"]')?.value.trim() ?? ""
 });
 
 leadForm?.addEventListener("submit", async (event) => {
@@ -146,7 +153,7 @@ leadForm?.addEventListener("submit", async (event) => {
       const next =
         typeof payload.thankYouPath === "string" && payload.thankYouPath.trim() !== ""
           ? payload.thankYouPath.trim()
-          : LEAD_THANK_YOU_DEFAULT;
+          : leadForm.dataset.thankYou || LEAD_THANK_YOU_DEFAULT;
       window.location.assign(next);
       return;
     }

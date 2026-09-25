@@ -325,6 +325,10 @@ p {
   font-weight: 800;
 }
 
+.price .price-note {
+  font-weight: 500;
+}
+
 .price-note {
   color: var(--text-muted);
   font-size: 0.95rem;
@@ -636,6 +640,51 @@ p {
   display: none;
 }
 
+details.faq-item .faq-answer {
+  display: block;
+}
+
+.features-more-title {
+  margin-top: 2.5rem;
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--text);
+  border-color: var(--border);
+  margin-left: 0.5rem;
+}
+
+.product-choice {
+  display: grid;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.scenario-grid {
+  display: grid;
+  gap: 1rem;
+}
+
+.video-soon {
+  min-height: 220px;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  padding: 1.5rem;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.hero-actions .btn {
+  margin-top: 0.4rem;
+}
+
 .faq-item.is-open .faq-answer {
   display: block;
 }
@@ -820,8 +869,15 @@ p {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
-  .features-grid {
+  .features-grid,
+  .product-choice,
+  .scenario-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .scenario-grid,
+  .product-choice {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .callcenter-flow {
