@@ -130,10 +130,23 @@
         <div class="container">
           <h2>Как работает приложение</h2>
           <p class="lead">Покажу на видео: упал заказ, уехал на почту, а вечером вы получили отчет в Telegram.</p>
-          <figure class="media-placeholder media-placeholder-large video-soon">
-            <figcaption>
-              Скоро здесь будет короткий ролик с записью экрана.
-            </figcaption>
+          <figure class="media-placeholder media-placeholder-large video-frame">
+            <video
+              class="video-frame__media"
+              muted
+              autoplay
+              loop
+              playsinline
+              controls
+              preload="metadata"
+            >
+              <source src="../assets/placeholders/app-demo.mp4" type="video/mp4" />
+              Ваш браузер не поддерживает видео.
+            </video>
+            <div class="video-frame__fallback" aria-live="polite">
+              Не удалось отобразить видеопоток. Проверьте кодек (рекомендуется H.264/AVC).
+            </div>
+            <figcaption>Запись экрана: заказ, отправка и отчёт в Telegram</figcaption>
           </figure>
         </div>
       </section>
