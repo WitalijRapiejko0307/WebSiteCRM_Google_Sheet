@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Заявка принята — CRM в Google Таблицах</title>
+    <meta name="robots" content="noindex, follow" />
+    <link rel="icon" href="./assets/brand/favicon-32.png" sizes="32x32" type="image/png" />
+    <link rel="apple-touch-icon" href="./assets/brand/apple-touch-icon.png" />
+    <link rel="stylesheet" href="./styles.css" />
+
+    <!-- conversion-pixels:head — вставьте базовый код Meta Pixel, Google tag (gtag.js), VK и т.д. только на этой странице -->
+    <!-- Пример Meta: <script>...</script> + событие Lead при необходимости отдельным скриптом ниже -->
+    <!-- Пример Google Ads: gtag('event', 'conversion', { ... }) после загрузки gtag -->
+
+    <!-- /conversion-pixels:head -->
+     <!-- TikTok Pixel Code Start -->
+    <script>
+      !function (w, d, t) {
+        w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie","holdConsent","revokeConsent","grantConsent"],ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=function(t){for(
+      var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e},ttq.load=function(e,n){var r="https://analytics.tiktok.com/i18n/pixel/events.js",o=n&&n.partner;ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=r,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};n=document.createElement("script")
+      ;n.type="text/javascript",n.async=!0,n.src=r+"?sdkid="+e+"&lib="+t;e=document.getElementsByTagName("script")[0];e.parentNode.insertBefore(n,e)};
+      
+      
+        ttq.load('DB4FIGBC77UAOLDV4LM0');
+        ttq.page();
+      }(window, document, 'ttq');
+      </script>
+      <!-- TikTok Pixel Code End -->
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Перейти к содержимому</a>
+    <header class="site-header">
+      <div class="container">
+        <a class="brand" href="./index.html">
+          <img
+            class="brand__logo"
+            src="./assets/brand/logo-icon.png"
+            alt=""
+            width="40"
+            height="40"
+            decoding="async"
+          />
+          <span class="brand__text">
+            <span class="brand__name">CRM-GS</span>
+            <span class="brand__tagline">CRM в Google Sheets</span>
+          </span>
+        </a>
+      </div>
+    </header>
+
+    <main id="main-content" class="section">
+      <div class="container">
+        <h1>Заявка принята</h1>
+        <p class="lead">
+          Заявка принята. Перезвоню в ближайшее время.
+        </p>
+        <p>
+          <a class="btn btn-primary" href="./index.html">Вернуться на главную</a>
+        </p>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container site-footer__inner">
+        <address class="site-footer__legal">
+          <p>Самозанятый Рапейко Виталий Тадеушевич</p>
+          <p>УНП НА3268470</p>
+          <p>г. Гродно, пр-т Янки Купалы 28-10</p>
+          <p>Телефон <a href="tel:+375298043522">+375298043522</a></p>
+          <p>Email <a href="mailto:witalijRapiejko@gmail.com">witalijRapiejko@gmail.com</a></p>
+        </address>
+        <p class="site-footer__copy">© <span id="current-year"></span> CRM-GS</p>
+      </div>
+    </footer>
+
+    <!-- conversion-pixels:body — дополнительные теги, img/noscript пиксели -->
+    <!-- /conversion-pixels:body -->
+
+    <script>
+      const yearNode = document.querySelector("#current-year");
+      if (yearNode) yearNode.textContent = String(new Date().getFullYear());
+    </script>
+  </body>
+</html>
