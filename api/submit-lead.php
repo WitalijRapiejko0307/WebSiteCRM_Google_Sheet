@@ -51,7 +51,7 @@ function jsonLeadDeliveredResponse(string $message): void
         'ok' => true,
         'message' => $message,
         'thankYou' => true,
-        'thankYouPath' => './thank-you.html',
+        'thankYouPath' => '/thank-you.html',
     ], JSON_UNESCAPED_UNICODE);
     exit;
 }

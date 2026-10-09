@@ -7,7 +7,7 @@ if (yearNode) {
 const GOOGLE_SCRIPT_URL =
   "https://script.google.com/macros/s/AKfycbypLxdPnpP-K6xg5YkSbRVbjDb6UPGTllTseH0Vmziuyiwmbg_KYbu9_amA6EnohQi8/exec";
 
-const LEAD_THANK_YOU_DEFAULT = "./thank-you.html";
+const LEAD_THANK_YOU_DEFAULT = "/thank-you.html";
 
 const modalRoot = document.querySelector("[data-lead-modal]");
 const openLeadButtons = document.querySelectorAll("[data-open-lead-form]");
@@ -150,10 +150,11 @@ leadForm?.addEventListener("submit", async (event) => {
     }
 
     if (payload.thankYou === true) {
-      const next =
-        typeof payload.thankYouPath === "string" && payload.thankYouPath.trim() !== ""
-          ? payload.thankYouPath.trim()
-          : leadForm.dataset.thankYou || LEAD_THANK_YOU_DEFAULT;
+      const fromPage = (leadForm.dataset.thankYou || "").trim();
+      const fromServer =
+        typeof payload.thankYouPath === "string" ? payload.thankYouPath.trim() : "";
+      const serverIsAbsolute = fromServer.startsWith("/") || /^https?:\/\//i.test(fromServer);
+      const next = fromPage || (serverIsAbsolute ? fromServer : LEAD_THANK_YOU_DEFAULT);
       window.location.assign(next);
       return;
     }
