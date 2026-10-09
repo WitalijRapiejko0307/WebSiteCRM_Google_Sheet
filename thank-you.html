@@ -61,25 +61,11 @@
       </div>
     </main>
 
-    <footer class="site-footer">
-      <div class="container site-footer__inner">
-        <address class="site-footer__legal">
-          <p>Самозанятый Рапейко Виталий Тадеушевич</p>
-          <p>УНП НА3268470</p>
-          <p>г. Гродно, пр-т Янки Купалы 28-10</p>
-          <p>Телефон <a href="tel:+375298043522">+375298043522</a></p>
-          <p>Email <a href="mailto:witalijRapiejko@gmail.com">witalijRapiejko@gmail.com</a></p>
-        </address>
-        <p class="site-footer__copy">© <span id="current-year"></span> CRM-GS</p>
-      </div>
-    </footer>
+    <div data-site-footer></div>
 
     <!-- conversion-pixels:body — дополнительные теги, img/noscript пиксели -->
     <!-- /conversion-pixels:body -->
 
-    <script>
-      const yearNode = document.querySelector("#current-year");
-      if (yearNode) yearNode.textContent = String(new Date().getFullYear());
-    </script>
+    <script defer src="./script.js?v=7"></script>
   </body>
 </html>

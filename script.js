@@ -1,7 +1,19 @@
-const yearNode = document.querySelector("#current-year");
-if (yearNode) {
-  yearNode.textContent = String(new Date().getFullYear());
-}
+const loadPartial = (selector, url) => {
+  const mount = document.querySelector(selector);
+  if (!mount) return;
+  fetch(url)
+    .then((response) => {
+      if (!response.ok) throw new Error(url);
+      return response.text();
+    })
+    .then((html) => {
+      mount.outerHTML = html;
+    })
+    .catch(() => {});
+};
+
+loadPartial("[data-site-author]", "/partials/author.html");
+loadPartial("[data-site-footer]", "/partials/footer.html");
 
 /** Web App URL (Deploy → Web app → Anyone). */
 const GOOGLE_SCRIPT_URL =
