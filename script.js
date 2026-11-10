@@ -216,3 +216,27 @@ const syncPricingVisualHeight = () => {
 
 syncPricingVisualHeight();
 window.addEventListener("resize", syncPricingVisualHeight);
+
+// Передаём UTM и click id рекламы на crm-gs.pro: у домена регистрации свои куки
+(() => {
+  const keys = ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term", "fbclid", "ttclid"];
+  const storeKey = "ad_params";
+  let saved = {};
+  try {
+    saved = JSON.parse(sessionStorage.getItem(storeKey) || "{}");
+  } catch (e) {}
+
+  const current = new URLSearchParams(window.location.search);
+  keys.forEach((key) => {
+    if (current.get(key)) saved[key] = current.get(key);
+  });
+  try {
+    sessionStorage.setItem(storeKey, JSON.stringify(saved));
+  } catch (e) {}
+
+  document.querySelectorAll('a[href^="https://crm-gs.pro"]').forEach((link) => {
+    const url = new URL(link.href);
+    Object.entries(saved).forEach(([key, value]) => url.searchParams.set(key, value));
+    link.href = url.toString();
+  });
+})();
